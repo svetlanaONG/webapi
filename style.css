@@ -1,0 +1,31 @@
+.hide {
+    display: none;
+}
+
+.start{
+    font-size: 1.2rem;
+    display: block;
+    margin: 20px;
+   
+}
+.wrap{
+
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+#questions {
+
+    font-size:larger;
+    margin: 50px;
+    padding: 50px;
+    text-align: center;
+}
+.choices {
+
+    text-align: center;
+}
+.start {
+    margin: 0 auto;
+}

@@ -1,29 +1,5 @@
-// var questionList1 = {
-//     questionList: "True or false: the * selector in CSS selects all HTML elements and applies a style to them"
 
-// a) 'true'
-// b) 'false'
-
-// }
-// //a is correct
-
-//var qustionList2= {
-//questionLists: "The purpose of the .gitignore file is to prevent unwanted files from being committed.",
-// a)'true'
-// b) 'false'
-//     }
-
-// //a is correct
-
-// var qustionList3= {
-//     questionLists: " Git is the version control software on your computer. GitHub is a website that can host remote Git repositories"
-// a)'true'
-// b) 'false'
-//     }
-//     //a-correct
-//     btnbtn-primary.addEventListener("click", questionList1);
-
-//i created 2 div wecime to quiz and myDiv, myDiv i displaeyd as a  none that why i created a function to display it as a block
+//i created 2 div wecime to quiz and myDiv, myDiv i displaeyd as a  none that why i created a function to display it as a block32`
 //this function swith what was in html on opposite things block to nonne. none to block by the click
 // function myFunction() {
 //   var x = document.getElementById("myDIV");
@@ -129,95 +105,165 @@
 // document.getElementById('myDIV').appendChild(answer2)
 //   currentQuestion++
 //   console.log(currentQuestion)
-
 // }
 // }
-
-
-
 
 // var buttons= document.getElementsByClassName("btn-secondary")
 
-
 // for (let i=0; i< buttons.length; i++) {
 // buttons[i].addEventListener("click",nextQuestion )
-
 // }
-
 
 // console.log(document.getElementsByClassName("btn-secondary"))
 
 
+// var qexample = {
+//   title:"whats afish?",
+//   choices:["a fish", "a dog", "a bird", "a car"],
+//   answer: "a fish"
+// }
+
+// document.getElementById('myDIV').appendChild(answer1)
+// document.getElementById('myDIV').appendChild(answer2)
 
 var question1 = {
   "question": "The purpose of the .gitignore file is to prevent unwanted files from being committed.",
-  "answer1": "true",
-  "answer2": "false",
+  "answer1": true,
+  "answer2": false,
   "correct": "true"
 }
 
 var question2 = {
   "question": "Git is the version control software on your computer. GitHub is a website that can host remote Git repositories",
-  "answer1": "true",
-  "answer2": "false",
+  "answer1": true,
+  "answer2": false,
   "correct": "true"
 }
 
 var question3 = {
   "question": " the * selector in CSS selects all HTML elements and applies a style to them ",
   "answer1": true,
-  "answer2": false
+  "answer2": false,
+  "correct": "true"
 }
 
 var timeLeft = 90;
-var userScore = 3;
+
 var score = 0
+
+var questionsEl = document.getElementById("questions");
+var choicesEl = document.getElementById("choices");
+var start = document.getElementById("start");
+var finalScoreContainerEl=document.getElementById("end");
 //create an array with questions
 var questions = [question1, question2, question3]
 console.log(questions[0].question)
 var currentQuestion = 0
+var getQuestionFromArray = false
 
-function nextQuestion() {
-  if (currentQuestion === 0) {
-    document.getElementById('questions').innerHTML = questions[0].question
-    document.getElementById('answer1').innerHTML = questions[0].answer1
-    document.getElementById('answer2').innerHTML = questions[0].answer2
-    currentQuestion++
-  } else {
-    document.getElementById('questions').innerHTML = questions[currentQuestion].question
-    document.getElementById('answer1').innerHTML = questions[currentQuestion].answer1
-    document.getElementById('answer2').innerHTML = questions[currentQuestion].answer2
-    currentQuestion++
-    console.log(currentQuestion)
-  }
+var selectedAnswer;
+var questionResultEl = document.getElementById("results");
+var timerID;
 
-if (currentQuestion < questions.length) {
-  if (!getQuestionFromArray) {
-    if (correct == this.innerHTML) {
-      score++
-    }
-  getQuestionFromArray = true
-  }
-  else {
-    if (questions[currentQuestion].correct == this.innerHTML) {
-      score++
-    }
+function startQuiz() {
+  timerID = setInterval(clockTick, 1000);
+  // hde start screen
+  var introEl = document.getElementById("start-screen");
+  introEl.setAttribute("class", "hide");
+
+  // un-hide questions section
+  questionsEl.removeAttribute("class");
+
+  nextQuestion();
+}
+//created another event listener it will show in brawser as true or false
+document.getElementById("choice1").addEventListener("click", checkAnswer1);
+
+function checkAnswer1() {
+  selectedAnswer = this.innerHTML
+  console.log(selectedAnswer)
+  console.log(questions[currentQuestion].correct)
+  if (selectedAnswer === questions[currentQuestion].correct) {
+    questionResultEl.innerHTML = 'Correct!';
+    questionResultEl.setAttribute('class', 'question-results');
+    score++
   }
 }
-  if (selectedAnswer === currentQuestion.answer) {
-    questionResultEl.textContent = 'Correct!';
+//creating a eventistener for answer false
+document.getElementById("choice2").addEventListener("click", checkAnswer2);
+
+function checkAnswer2() {
+  selectedAnswer = this.innerHTML
+  console.log(selectedAnswer)
+  console.log(questions[currentQuestion].correct)
+  if (selectedAnswer !== questions[currentQuestion].correct) {
+    questionResultEl.innerHTML = 'Wrong!';
     questionResultEl.setAttribute('class', 'question-results');
+
   }
+}
+
+
+function nextQuestion() {
+  questionResultEl.innerHTML = ""
+  if (currentQuestion === 0) {
+    document.getElementById('questions').innerHTML = questions[0].question
+    document.getElementById('choice1').innerHTML = questions[0].answer1
+    document.getElementById('choice2').innerHTML = questions[0].answer2
+    currentQuestion++
+  } else if (currentQuestion < questions.length) {
+
+    document.getElementById('questions').innerHTML = questions[currentQuestion].question
+    document.getElementById('choice1').innerHTML = questions[currentQuestion].answer1
+    document.getElementById('choice2').innerHTML = questions[currentQuestion].answer2
+    currentQuestion++
+    console.log(currentQuestion)
+    if (!getQuestionFromArray) {
+      if (correct == this.innerHTML) {
+        score++
+      }
+      getQuestionFromArray = true
+    }
+    else {
+      if (questions[currentQuestion].correct == this.innerHTML) {
+        score++
+      }
+    }
+  }
+  // to be reviewed
+  //   if (currentQuestion < questions.length) {
+  //     if (!getQuestionFromArray) {
+  //       if (correct == this.innerHTML) {
+  //         score++
+  //       }
+  //       getQuestionFromArray = true
+  //     }
+  //     else {
+  //       if (questions[currentQuestion].correct == this.innerHTML) {
+  //         score++
+  //       }
+  //     } 
+  //   }
   else {
-    questionResultEl.textContent = 'Wrong!';
-    questionResultEl.setAttribute('class', 'question-results');
+    endQuiz()
 
-    timeLeft -= 10;
-    clockTick;
+  } 
+  // console.log (selectedAnswer)
+  // if (selectedAnswer === currentQuestion.answer) {
+  //   questionResultEl.textContent = 'Correct!';
+  //   questionResultEl.setAttribute('class', 'question-results');
+  // }
+  // else {
+  //   questionResultEl.textContent = 'Wrong!';
+  //   questionResultEl.setAttribute('class', 'question-results');
 
-    timerID = setInterval(clockTick, 1000);
-    generateNewQuestion();
-  }
+  //   timeLeft -= 10;
+  //   clockTick;
+
+  //   timerID = setInterval(clockTick, 1000);
+  //   generateNewQuestion();
+  // }
+
 }
 
 function time() {
@@ -231,9 +277,61 @@ function time() {
 
 function endQuiz() {
   clearInterval(timerID);
-  questionZoneEl.style.display = 'none'
+  
+  questionsEl.style.display = 'none'
+  questionResultEl.style.display = 'none'
   finalScoreContainerEl.style.display = 'block'
+  document.getElementById("choice1").style.display="none"
+  document.getElementById("choice2").style.display="none"
+  document.getElementById("button").style.display="none"
+  document.getElementById("score").textContent= score;
 
-  finalScoreEl.textContent = userScore;
 }
-      document.getElementById("button").addEventListener("click", nextQuestion);
+document.getElementById("button").addEventListener("click", nextQuestion);
+
+function submitIn(e){ 
+  e.preventDefault();
+  console.log("hello")
+var fname = document.getElementById("fname").value;
+  localStorage.setItem("initials", fname);
+  console.log(fname)
+
+}
+// currentQuestion.choices.forEach(function (choice, i) {
+  document.getElementById("submitButton").addEventListener("click", submitIn);
+
+//   var temp = document.createElement('button');
+
+//   temp.textContent = element;
+//   temp.setAttribute('class', 'cta cta-primary quiz-button');
+//   temp.setAttribute('value', element);
+
+//   temp.onclick = validateAnswer;
+
+//   quizAnswersEl.appendChild(temp);
+
+// });
+
+function validateAnswer() {
+  var currentQuestion = questions[questionIndex];
+  var selectedAnswer = this.value;
+
+  if (selectedAnswer === currentQuestion.answer) {
+    questionResultEl.textContent = 'Correct!';
+    questionResultEl.setAttribute('class', 'question-results');
+  }
+  else {
+    questionResultEl.textContent = 'Wrong!';
+    questionResultEl.setAttribute('class', 'question-results');
+
+    timeLeft -= 10;
+    clockTick;
+
+    userScoreEl.textContent = userScore -= randomNumber(9, 21);
+  };
+
+  questionIndex++;
+
+  generateNewQuestion();
+};
+
